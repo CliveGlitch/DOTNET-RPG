@@ -14,5 +14,6 @@ namespace DOTNET_RPG.Models
         public int Defense { get; set; } = 10;
         public int Intelligence { get; set; }
         public RPGClass Class { get; set; } = RPGClass.Thief;
+        public User? User { get; set; }
     }
 }
