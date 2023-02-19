@@ -21,38 +21,48 @@ namespace DOTNET_RPG.Controllers
         }
 
         [HttpGet("GetAll")]
-        public async Task<ActionResult<ServiceResponse<List<GetCharacterDTO>>>> Get(){
-            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)!.Value);
-            return Ok(await _characterService.GetAllCharacters(userId));
+        public async Task<ActionResult<ServiceResponse<List<GetCharacterDTO>>>> Get()
+        {
+            return Ok(await _characterService.GetAllCharacters());
         }
 
         [HttpGet("GetById_{id}")]
-        public async Task<ActionResult<ServiceResponse<GetCharacterDTO>>> GetById(int id){
+        public async Task<ActionResult<ServiceResponse<GetCharacterDTO>>> GetById(int id)
+        {
             var response = await _characterService.GetCharacterById(id);
 
-            if(!response.Success) return NotFound(response);
+            if (!response.Success) return NotFound(response);
             return Ok(response);
         }
 
         [HttpPost]
-        public async Task<ActionResult<ServiceResponse<List<GetCharacterDTO>>>> AddCharacter(AddCharacterDTO newCharacter){
+        public async Task<ActionResult<ServiceResponse<List<GetCharacterDTO>>>> AddCharacter(AddCharacterDTO newCharacter)
+        {
             return Ok(await _characterService.AddCharacter(newCharacter));
         }
 
         [HttpPut]
-        public async Task<ActionResult<ServiceResponse<List<GetCharacterDTO>>>> UpdateCharacter(UpdateCharacterDTO updatedCharacter){
+        public async Task<ActionResult<ServiceResponse<List<GetCharacterDTO>>>> UpdateCharacter(UpdateCharacterDTO updatedCharacter)
+        {
             var response = await _characterService.UpdateCharacter(updatedCharacter);
 
-            if(!response.Success) return NotFound(response);
+            if (!response.Success) return NotFound(response);
             return Ok(response);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<ServiceResponse<GetCharacterDTO>>> DeleteCharacter(int id){
+        public async Task<ActionResult<ServiceResponse<GetCharacterDTO>>> DeleteCharacter(int id)
+        {
             var response = await _characterService.DeleteCharacterById(id);
 
-            if(!response.Success) return NotFound(response);
+            if (!response.Success) return NotFound(response);
             return Ok(response);
         }
+
+        [HttpPost("Skill")]
+        public async Task<ActionResult<ServiceResponse<GetCharacterDTO>>> AddCharacterSkill(AddCharacterSkillDTO newCharacterSkill)
+        {
+            return Ok(await _characterService.AddCharacterSkill(newCharacterSkill));
+        } 
     }
 }
